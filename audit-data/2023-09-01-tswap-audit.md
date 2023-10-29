@@ -55,7 +55,7 @@ Assisting Auditors:
   - [High](#high)
     - [\[H-1\] The `sellPoolTokens` function miscalculates amount of tokens bought](#h-1-the-sellpooltokens-function-miscalculates-amount-of-tokens-bought)
     - [\[H-2\] Protocol may take too many tokens from users during swap, resulting is lost fee](#h-2-protocol-may-take-too-many-tokens-from-users-during-swap-resulting-is-lost-fee)
-    - [\[H-3\] No fees in the protocol](#h-3-no-fees-in-the-protocol)
+    - [\[H-3\] Additional swap incentive breaks protocol invariant](#h-3-additional-swap-incentive-breaks-protocol-invariant)
   - [Medium](#medium)
     - [\[M-1\] Rebase, fee-on-transfer, ERC777, and centralized ERC20s can break core invariant](#m-1-rebase-fee-on-transfer-erc777-and-centralized-erc20s-can-break-core-invariant)
     - [\[M-2\] Missing deadline check when adding liquidity](#m-2-missing-deadline-check-when-adding-liquidity)
@@ -228,7 +228,15 @@ function testFlawedSwapExactOutput() public {
 }
 ```
 
-### [H-3] No fees in the protocol
+### [H-3] Additional swap incentive breaks protocol invariant
+
+```javascript
+@>      swap_count++;
+        if (swap_count >= SWAP_COUNT_MAX) {
+            swap_count = 0;
+            outputToken.safeTransfer(msg.sender, 1_000_000_000_000_000_000);
+        }
+```
 
 ## Medium
 
