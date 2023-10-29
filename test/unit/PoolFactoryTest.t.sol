@@ -7,11 +7,13 @@ import { ERC20Mock } from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
 
 contract PoolFactoryTest is Test {
     PoolFactory factory;
+    ERC20Mock mockWeth;
     ERC20Mock tokenA;
     ERC20Mock tokenB;
 
     function setUp() public {
-        factory = new PoolFactory();
+        mockWeth = new ERC20Mock();
+        factory = new PoolFactory(address(mockWeth));
         tokenA = new ERC20Mock();
         tokenB = new ERC20Mock();
     }

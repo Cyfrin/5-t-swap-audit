@@ -16,11 +16,8 @@ contract TSwapPoolTest is Test {
 
     function setUp() public {
         poolToken = new ERC20Mock();
-        pool = new TSwapPool(address(poolToken), "LTokenA", "LA");
-
-        // Overright the WETH address
-        deployCodeTo("ERC20Mock.sol:ERC20Mock", address(pool.WETH_TOKEN()));
-        weth = ERC20Mock(address(pool.WETH_TOKEN()));
+        weth = new ERC20Mock();
+        pool = new TSwapPool(address(poolToken), address(weth), "LTokenA", "LA");
 
         weth.mint(liquidityProvider, 200e18);
         poolToken.mint(liquidityProvider, 200e18);

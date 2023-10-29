@@ -55,6 +55,7 @@ Assisting Auditors:
   - [High](#high)
     - [\[H-1\] The `sellPoolTokens` function miscalculates amount of tokens bought](#h-1-the-sellpooltokens-function-miscalculates-amount-of-tokens-bought)
     - [\[H-2\] Protocol may take too many tokens from users during swap, resulting is lost fee](#h-2-protocol-may-take-too-many-tokens-from-users-during-swap-resulting-is-lost-fee)
+    - [\[H-3\] No fees in the protocol](#h-3-no-fees-in-the-protocol)
   - [Medium](#medium)
     - [\[M-1\] Rebase, fee-on-transfer, ERC777, and centralized ERC20s can break core invariant](#m-1-rebase-fee-on-transfer-erc777-and-centralized-erc20s-can-break-core-invariant)
     - [\[M-2\] Missing deadline check when adding liquidity](#m-2-missing-deadline-check-when-adding-liquidity)
@@ -64,6 +65,7 @@ Assisting Auditors:
     - [\[L-2\] Swapping function returns default value](#l-2-swapping-function-returns-default-value)
   - [Informational](#informational)
     - [\[I-1\] Poor test coverage](#i-1-poor-test-coverage)
+    - [\[I-2\] Provide better error for `TSwapPool::getInputAmountBasedOnOutput`](#i-2-provide-better-error-for-tswappoolgetinputamountbasedonoutput)
 </details>
 </br>
 
@@ -226,6 +228,8 @@ function testFlawedSwapExactOutput() public {
 }
 ```
 
+### [H-3] No fees in the protocol
+
 ## Medium
 
 ### [M-1] Rebase, fee-on-transfer, ERC777, and centralized ERC20s can break core invariant 
@@ -325,3 +329,16 @@ Running tests...
 ```
 
 **Recommended Mitigation:** Aim to get test coverage up to over 90% for all files.
+
+### [I-2] Provide better error for `TSwapPool::getInputAmountBasedOnOutput`
+
+When `outputReserves` & `outputAmount` are the same, `TSwapPool::getInputAmountBasedOnOutput` will revert with arithmetic divide by zero. This is not very helpful for users. Consider adding a custom error message.
+
+```diff
++       error TSwapPool__CannotRemoveEntireBalance();
+.
+.
+.
++       if (outputReserves, outputAmount) {revert TSwapPool__CannotRemoveEntireBalance();}
+        return (inputReserves * outputAmount) / ((outputReserves - outputAmount));
+```

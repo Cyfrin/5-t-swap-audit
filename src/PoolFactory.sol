@@ -27,6 +27,8 @@ contract PoolFactory {
     mapping(address token => address pool) private s_pools;
     mapping(address pool => address token) private s_tokens;
 
+    address private immutable i_wethToken;
+
     /*//////////////////////////////////////////////////////////////
                                  EVENTS
     //////////////////////////////////////////////////////////////*/
@@ -35,6 +37,9 @@ contract PoolFactory {
     /*//////////////////////////////////////////////////////////////
                                FUNCTIONS
     //////////////////////////////////////////////////////////////*/
+    constructor(address wethToken) {
+        i_wethToken = wethToken;
+    }
 
     /*//////////////////////////////////////////////////////////////
                            EXTERNAL FUNCTIONS
@@ -45,7 +50,7 @@ contract PoolFactory {
         }
         string memory liquidityTokenName = string.concat("T-Swap ", IERC20(tokenAddress).name());
         string memory liquidityTokenSymbol = string.concat("ts", IERC20(tokenAddress).name());
-        TSwapPool tPool = new TSwapPool(tokenAddress, liquidityTokenName, liquidityTokenSymbol);
+        TSwapPool tPool = new TSwapPool(tokenAddress, i_wethToken, liquidityTokenName, liquidityTokenSymbol);
         s_pools[tokenAddress] = address(tPool);
         s_tokens[address(tPool)] = tokenAddress;
         emit PoolCreated(tokenAddress, address(tPool));
@@ -61,5 +66,9 @@ contract PoolFactory {
 
     function getToken(address pool) external view returns (address) {
         return s_tokens[pool];
+    }
+
+    function getWethToken() external view returns (address) {
+        return i_wethToken;
     }
 }
