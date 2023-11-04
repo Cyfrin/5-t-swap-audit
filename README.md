@@ -84,6 +84,8 @@ Note, in practice, the pool would have slightly different values than 1,400.3 WE
 
 Our system works because the ratio of Token A & WETH will always stay the same. Well, for the most part. Since we add fees, our invariant technially increases. 
 
+![uniswap-delta-x](images/diagrams/uniswap-delta-x.png)
+
 `x * y = k`
 - x = Token Balance X
 - y = Token Balance Y
