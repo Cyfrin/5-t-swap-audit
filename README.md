@@ -23,6 +23,7 @@
 - [Audit Scope Details](#audit-scope-details)
   - [Actors / Roles](#actors--roles)
   - [Known Issues](#known-issues)
+- [CodeHawks](#codehawks)
 
 ## Overview Diagram
 
@@ -182,3 +183,7 @@ forge coverage --report debug
 ## Known Issues
 
 - None
+
+# CodeHawks
+
+Hasn't happened yet for this repo!
