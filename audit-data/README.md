@@ -8,7 +8,7 @@ You can use the [audit-report-templating](https://github.com/Cyfrin/audit-report
 4. Add your logo to the directory as a pdf named `logo.pdf`
 5. Run this command:
 ```
-pandoc 2023-09-01-tswap-audit.md -o report.pdf --from markdown --template=eisvogel --listings
+pandoc 2023-09-01-tswap-audit.md -o report.pdf --from markdown --template=eisvogel --listings -V colorlinks=true
 ```
 
 # Tooling
