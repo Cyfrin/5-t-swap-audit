@@ -141,9 +141,11 @@ contract TSwapPool is ERC20 {
             // (wethReserves / poolTokenReserves)
             //
             // So we can do some elementary math now to figure out poolTokensToDeposit...
-            // (wethReserves + wethToDeposit) / poolTokensToDeposit = wethReserves
-            // (wethReserves + wethToDeposit)  = wethReserves * poolTokensToDeposit
-            // (wethReserves + wethToDeposit) / wethReserves  =  poolTokensToDeposit
+            // (wethReserves + wethToDeposit) = (poolTokenReserves + poolTokensToDeposit) * (wethReserves / poolTokenReserves)
+            // wethReserves + wethToDeposit  = poolTokenReserves * (wethReserves / poolTokenReserves) + poolTokensToDeposit * (wethReserves / poolTokenReserves)
+            // wethReserves + wethToDeposit = wethReserves + poolTokensToDeposit * (wethReserves / poolTokenReserves)
+            // wethToDeposit / (wethReserves / poolTokenReserves) = poolTokensToDeposit
+            // (wethToDeposit * poolTokenReserves) / wethReserves = poolTokensToDeposit
             uint256 poolTokensToDeposit = getPoolTokensToDepositBasedOnWeth(
                 wethToDeposit
             );
