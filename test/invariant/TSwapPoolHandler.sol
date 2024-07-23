@@ -25,8 +25,8 @@ contract TSwapPoolHandler is Test {
 
     constructor(TSwapPool _pool) {
         pool = _pool;
-        weth = ERC20Mock(address(pool.getWeth()));
-        poolToken = ERC20Mock(address(pool.getPoolToken()));
+        weth = ERC20Mock(pool.getWeth());
+        poolToken = ERC20Mock(pool.getPoolToken());
     }
 
     function swapPoolTokenForWethBasedOnOutputWeth(uint256 outputWethAmount) public {
